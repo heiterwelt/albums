@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "HNDB.h"
+#import "SDImageCache.h"
+
 @interface ViewController : UIViewController
 @property(nonatomic,strong)HNDatabase *db;
 
