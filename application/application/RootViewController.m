@@ -176,13 +176,16 @@
             if (photos.count>=1) {
                 for (NSInteger i=NUMBER+1; i<NUMBER+photos.count+1; i++) {
                     NSString *key=[NSString stringWithFormat:@"image_%ld",(long)i];
-                    UIImage *image=photos[i-1];
+                    UIImage *image=photos[i-1-NUMBER];
                     
                     [[SDImageCache sharedImageCache] storeImage:image forKey:key];
                 }
                 
             }
         }
+        
+        NSLog(@"start:%ld",[[SDImageCache sharedImageCache] getDiskCount]);
+        
         
         
         //提取
@@ -194,12 +197,26 @@
             NSString *keyget=[NSString stringWithFormat:@"image_%ld",n];
             
             UIImage *image=[[SDImageCache sharedImageCache] imageFromDiskCacheForKey:keyget];
-            [arr addObject:image];
+            if (image) {
+                 [arr addObject:image];
+            }
+           
             
         }
         
         
         NSLog(@"%@",arr);
+        
+        NSLog(@"get:%ld",[[SDImageCache sharedImageCache] getDiskCount]);
+
+        
+        //删除
+        NSInteger deletenum=3;
+        [arr removeObjectAtIndex:deletenum];
+        NSString *deletekey=[NSString stringWithFormat:@"image_%ld",deletenum+1];
+        [[SDImageCache sharedImageCache] removeImageForKey:deletekey];
+        NSLog(@"delete:%ld",[[SDImageCache sharedImageCache] getDiskCount]);
+
         
     }];
     
