@@ -7,11 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIImage+ZLPhotoLib.h"
-#import "ZLPhoto.h"
+
+
 #import "UIButton+WebCache.h"
 
 #import "application-Swift.h"
+
+
+
+#import "TZImagePickerController.h"
+#import "UIView+Layout.h"
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <Photos/Photos.h>
+#import "TZImageManager.h"
 @interface RootViewController : UIViewController <UIPageViewControllerDelegate>
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;

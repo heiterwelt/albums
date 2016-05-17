@@ -9,8 +9,14 @@
 #import "RootViewController.h"
 #import "ModelController.h"
 #import "DataViewController.h"
-
-@interface RootViewController () <ZLPhotoPickerBrowserViewControllerDelegate>
+#import "SDImageCache.h"
+@interface RootViewController ()
+{
+    NSMutableArray *_selectedPhotos;
+    NSMutableArray *_selectedAssets;
+    BOOL _isSelectOriginalPhoto;
+    
+}
 
 @property (nonatomic , strong) NSMutableArray *assets;
 
@@ -37,8 +43,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    // Configure the page view controller and add it as a child view controller.
+    _selectedPhotos = [NSMutableArray array];
+    _selectedAssets = [NSMutableArray array];
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.delegate = self;
 
@@ -142,24 +148,75 @@
 
 - (IBAction)addPictures:(id)sender {
     
-    ZLPhotoPickerViewController *pickerVc = [[ZLPhotoPickerViewController alloc] init];
-    // MaxCount, Default = 9
-    pickerVc.maxCount = 9;
-    // Jump AssetsVc
-    pickerVc.status = PickerViewShowStatusCameraRoll;
-    // Filter: PickerPhotoStatusAllVideoAndPhotos, PickerPhotoStatusVideos, PickerPhotoStatusPhotos.
-    pickerVc.photoStatus = PickerPhotoStatusPhotos;
-    // Recoder Select Assets
-    pickerVc.selectPickers = self.assets;
-    // Desc Show Photos, And Suppor Camera
-    pickerVc.topShowPhotoPicker = YES;
-    pickerVc.isShowCamera = YES;
-    // CallBack
-    pickerVc.callBack = ^(NSArray<ZLPhotoAssets *> *status){
-        self.assets = status.mutableCopy;
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 delegate:nil];
+    imagePickerVc.isSelectOriginalPhoto = _isSelectOriginalPhoto;
+    imagePickerVc.selectedAssets = _selectedAssets; // optional, 可选的
+    
+    // You can get the photos by block, the same as by delegate.
+    // 你可以通过block或者代理，来得到用户选择的照片.
+    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         
-    };
-    [pickerVc showPickerVc:self];
+
+        //保存
+        NSInteger NUMBER=[[SDImageCache sharedImageCache] getDiskCount];
+        if (NUMBER==0) {
+            if (photos.count>=1) {
+                for (int i=1; i<photos.count+1; i++) {
+                    NSString *key=[NSString stringWithFormat:@"image_%d",i];
+                    UIImage *image=photos[i-1];
+                    
+                    [[SDImageCache sharedImageCache] storeImage:image forKey:key];
+                }
+
+            }
+        }
+        
+        
+        if (NUMBER>0) {
+            if (photos.count>=1) {
+                for (NSInteger i=NUMBER+1; i<NUMBER+photos.count+1; i++) {
+                    NSString *key=[NSString stringWithFormat:@"image_%ld",(long)i];
+                    UIImage *image=photos[i-1];
+                    
+                    [[SDImageCache sharedImageCache] storeImage:image forKey:key];
+                }
+                
+            }
+        }
+        
+        
+        //提取
+        
+
+        NSMutableArray *arr=[NSMutableArray array];
+        NSInteger getnum=[[SDImageCache sharedImageCache] getDiskCount];
+        for (NSInteger n=1; n<getnum+1; n++) {
+            NSString *keyget=[NSString stringWithFormat:@"image_%ld",n];
+            
+            UIImage *image=[[SDImageCache sharedImageCache] imageFromDiskCacheForKey:keyget];
+            [arr addObject:image];
+            
+        }
+        
+        
+        NSLog(@"%@",arr);
+        
+    }];
+    
+    // Set the appearance
+    // 在这里设置imagePickerVc的外观
+     imagePickerVc.navigationBar.barTintColor = [UIColor brownColor];
+    // imagePickerVc.oKButtonTitleColorDisabled = [UIColor lightGrayColor];
+    // imagePickerVc.oKButtonTitleColorNormal = [UIColor greenColor];
+    
+    // Set allow picking video & photo & originalPhoto or not
+    // 设置是否可以选择视频/图片/原图
+    // imagePickerVc.allowPickingVideo = NO;
+    // imagePickerVc.allowPickingImage = NO;
+    // imagePickerVc.allowPickingOriginalPhoto = NO;
+    
+    [self presentViewController:imagePickerVc animated:YES completion:nil];
+
 
 }
 

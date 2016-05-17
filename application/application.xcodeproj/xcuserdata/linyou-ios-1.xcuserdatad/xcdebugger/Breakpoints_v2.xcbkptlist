@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "application/RootViewController.m"
-            timestampString = "484729166.963242"
+            timestampString = "485163057.887513"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "-pageViewController:spineLocationForInterfaceOrientation:"
             landmarkType = "5">
          </BreakpointContent>
