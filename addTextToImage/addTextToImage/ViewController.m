@@ -16,6 +16,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIImageView *imagview=[[UIImageView alloc]initWithFrame:self.view.frame];
+    [self.view addSubview:imagview];
+    
+    UIImage *image=[UIImage imageNamed:@"one.png"];
+    [imagview setImage:image];
+    UIImage *image2= [self drawFront:image text:@"sdfaerdgfergad" atPoint:CGPointMake(50, 100)];
+    [imagview setImage:image2];
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
 -(UIImage *)addText:(UIImage *)img text:(NSString *)text1
@@ -32,12 +40,43 @@
     CGContextSelectFont(context, "Georgia", 30, kCGEncodingMacRoman);//设置字体的大小
     CGContextSetTextDrawingMode(context, kCGTextFill);//设置字体绘制方式
     CGContextSetRGBFillColor(context, 255, 0, 0, 1);//设置字体绘制的颜色
-    CGContextShowTextAtPoint(context, w/2-strlen(text)*5, h/2, text, strlen(text));//设置字体绘制的位置
+//    CGContextShowTextAtPoint(context, w/2-strlen(text)*5, h/2, text, strlen(text));//设置字体绘制的位置
+    CGContextShowTextAtPoint(context, 0, 90, text, strlen(text));//设置字体绘制的位置
+
     //Create image ref from the context
     CGImageRef imageMasked = CGBitmapContextCreateImage(context);//创建CGImage
     CGContextRelease(context);
     CGColorSpaceRelease(colorSpace);
     return [UIImage imageWithCGImage:imageMasked];//获得添加水印后的图片   
+}
+
+
+-(UIImage*)drawFront:(UIImage*)image text:(NSString*)text atPoint:(CGPoint)point
+{
+//    UIFont *font = [UIFont fontWithName:@"Halter" size:21];
+    UIFont *font = [UIFont systemFontOfSize:20];
+
+    UIGraphicsBeginImageContext(image.size);
+    [image drawInRect:CGRectMake(0,0,image.size.width,image.size.height)];
+    CGRect rect = CGRectMake(point.x, (point.y - 5), image.size.width, image.size.height);
+    [[UIColor whiteColor] set];
+    
+    NSMutableAttributedString* attString = [[NSMutableAttributedString alloc] initWithString:text];
+    NSRange range = NSMakeRange(0, [attString length]);
+    
+    [attString addAttribute:NSFontAttributeName value:font range:range];
+    [attString addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:range];
+    
+    NSShadow* shadow = [[NSShadow alloc] init];
+    shadow.shadowColor = [UIColor darkGrayColor];
+    shadow.shadowOffset = CGSizeMake(1.0f, 1.5f);
+    [attString addAttribute:NSShadowAttributeName value:shadow range:range];
+    
+    [attString drawInRect:CGRectIntegral(rect)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
 }
 
 
