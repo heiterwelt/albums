@@ -9,23 +9,56 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-
+@property(nonatomic,strong)UITextField *textf;
+@property(nonatomic,strong)NSString *textget;
+@property(nonatomic,strong)UIImageView *imagview;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIImageView *imagview=[[UIImageView alloc]initWithFrame:self.view.frame];
-    [self.view addSubview:imagview];
+    UIScrollView *scroll=[[UIScrollView alloc]initWithFrame:self.view.frame];
+    [self.view addSubview:scroll];
+    scroll.maximumZoomScale=2;
+    scroll.minimumZoomScale=0.8;
+    
+    
+    self.textf=[[UITextField alloc]initWithFrame:CGRectMake(0, 90, self.view.frame.size.width/2, 50)];
+    
+    
+    _imagview=[[UIImageView alloc]initWithFrame:self.view.frame];
+    [scroll addSubview:_imagview];
+    _imagview.userInteractionEnabled=YES;
+    
     
     UIImage *image=[UIImage imageNamed:@"one.png"];
-    [imagview setImage:image];
+    [_imagview setImage:image];
     UIImage *image2= [self drawFront:image text:@"sdfaerdgfergad" atPoint:CGPointMake(50, 100)];
-    [imagview setImage:image2];
+    [_imagview setImage:image2];
+    _imagview.userInteractionEnabled=YES;
+    _imagview.multipleTouchEnabled=YES;
+
+    
+    [_imagview addSubview:self.textf];
+    self.textf.backgroundColor=[UIColor blueColor];
+    UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(pan:)];
+    [self.textf addGestureRecognizer:pan];
+    
     
     // Do any additional setup after loading the view, typically from a nib.
 }
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.textf resignFirstResponder];
+}
+-(void)pan:(UIPanGestureRecognizer *)pangesture{
+    CGPoint point=[pangesture translationInView:self.textf];
+    pangesture.view.center = CGPointMake(pangesture.view.center.x + point.x,
+                                         pangesture.view.center.y + point.y);
+    [pangesture setTranslation:CGPointZero inView:self.textf];
+}
+
 -(UIImage *)addText:(UIImage *)img text:(NSString *)text1
 {
     //上下文的大小
@@ -53,9 +86,85 @@
 
 -(UIImage*)drawFront:(UIImage*)image text:(NSString*)text atPoint:(CGPoint)point
 {
-//    UIFont *font = [UIFont fontWithName:@"Halter" size:21];
-    UIFont *font = [UIFont systemFontOfSize:20];
-
+   UIFont *font = [UIFont fontWithName:@"Copperplate" size:28];
+    NSLog(@"%@",[UIFont familyNames]);
+    //UIFont *font = [UIFont systemFontOfSize:20];
+//    Copperplate,
+//    "Heiti SC",
+//    "Iowan Old Style",
+//    "Kohinoor Telugu",
+//    Thonburi,
+//    "Heiti TC",
+//    "Courier New",
+//    "Gill Sans",
+//    "Apple SD Gothic Neo",
+//    "Marker Felt",
+//    "Avenir Next Condensed",
+//    "Tamil Sangam MN",
+//    "Helvetica Neue",
+//    "Gurmukhi MN",
+//    "Times New Roman",
+//    Georgia,
+//    "Apple Color Emoji",
+//    "Arial Rounded MT Bold",
+//    Kailasa,
+//    "Kohinoor Devanagari",
+//    "Kohinoor Bangla",
+//    "Chalkboard SE",
+//    "Sinhala Sangam MN",
+//    "PingFang TC",
+//    "Gujarati Sangam MN",
+//    Damascus,
+//    Noteworthy,
+//    "Geeza Pro",
+//    Avenir,
+//    "Academy Engraved LET",
+//    Mishafi,
+//    Futura,
+//    Farah,
+//    "Kannada Sangam MN",
+//    "Arial Hebrew",
+//    Arial,
+//    "Party LET",
+//    Chalkduster,
+//    "Hoefler Text",
+//    Optima,
+//    Palatino,
+//    "Lao Sangam MN",
+//    "Malayalam Sangam MN",
+//    "Al Nile",
+//    "Bradley Hand",
+//    "PingFang HK",
+//    "Trebuchet MS",
+//    Helvetica,
+//    Courier,
+//    Cochin,
+//    "Hiragino Mincho ProN",
+//    "Devanagari Sangam MN",
+//    "Oriya Sangam MN",
+//    "Snell Roundhand",
+//    "Zapf Dingbats",
+//    "Bodoni 72",
+//    Verdana,
+//    "American Typewriter",
+//    "Avenir Next",
+//    Baskerville,
+//    "Khmer Sangam MN",
+//    Didot,
+//    "Savoye LET",
+//    "Bodoni Ornaments",
+//    Symbol,
+//    Menlo,
+//    "Bodoni 72 Smallcaps",
+//    Papyrus,
+//    "Hiragino Sans",
+//    "PingFang SC",
+//    "Euphemia UCAS",
+//    "Telugu Sangam MN",
+//    "Bangla Sangam MN",
+//    Zapfino,
+//    "Bodoni 72 Oldstyle"
+    
     UIGraphicsBeginImageContext(image.size);
     [image drawInRect:CGRectMake(0,0,image.size.width,image.size.height)];
     CGRect rect = CGRectMake(point.x, (point.y - 5), image.size.width, image.size.height);
