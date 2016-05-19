@@ -25,7 +25,7 @@
     
     
     self.textf=[[UITextField alloc]initWithFrame:CGRectMake(0, 90, self.view.frame.size.width/2, 50)];
-    
+    self.textf.userInteractionEnabled=YES;
     
     _imagview=[[UIImageView alloc]initWithFrame:self.view.frame];
     [scroll addSubview:_imagview];
@@ -45,19 +45,40 @@
     UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(pan:)];
     [self.textf addGestureRecognizer:pan];
     
+    //UITapGestureRecognizer *tapsave=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector()];
     
+    
+    UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapandSave)];
+    tap.numberOfTapsRequired=2;
+    [self.imagview addGestureRecognizer:tap];
+    
+    UIRotationGestureRecognizer *rotate=[[UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(rotatelabel:)];
+    [self.textf addGestureRecognizer:rotate];
     
     // Do any additional setup after loading the view, typically from a nib.
+}
+
+-(void)tapandSave{
+      [self.textf resignFirstResponder];
+    UIImage *image=  [self drawFront:self.imagview.image text:self.textf.text atPoint:self.textf.frame.origin];
+    [self.imagview setImage:image];
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self.textf resignFirstResponder];
 }
 -(void)pan:(UIPanGestureRecognizer *)pangesture{
+      [self.textf resignFirstResponder];
     CGPoint point=[pangesture translationInView:self.textf];
     pangesture.view.center = CGPointMake(pangesture.view.center.x + point.x,
                                          pangesture.view.center.y + point.y);
     [pangesture setTranslation:CGPointZero inView:self.textf];
+}
+
+-(void)rotatelabel:(UIRotationGestureRecognizer*)rotate{
+    [self.textf resignFirstResponder];
+    CGFloat rad=rotate.rotation;
+    NSLog(@"%f",rad);
 }
 
 -(UIImage *)addText:(UIImage *)img text:(NSString *)text1
@@ -75,7 +96,7 @@
     CGContextSetTextDrawingMode(context, kCGTextFill);//设置字体绘制方式
     CGContextSetRGBFillColor(context, 255, 0, 0, 1);//设置字体绘制的颜色
 //    CGContextShowTextAtPoint(context, w/2-strlen(text)*5, h/2, text, strlen(text));//设置字体绘制的位置
-    CGContextShowTextAtPoint(context, 0, 90, text, strlen(text));//设置字体绘制的位置
+    CGContextShowTextAtPoint(context, self.textf.frame.origin.x,  self.textf.frame.origin.y, text, strlen(text));//设置字体绘制的位置
 
     //Create image ref from the context
     CGImageRef imageMasked = CGBitmapContextCreateImage(context);//创建CGImage
@@ -168,7 +189,10 @@
     
     UIGraphicsBeginImageContext(image.size);
     [image drawInRect:CGRectMake(0,0,image.size.width,image.size.height)];
-    CGRect rect = CGRectMake(point.x, (point.y - 5), image.size.width, image.size.height);
+   // CGRect rect = CGRectMake(point.x,point.y, image.size.width, image.size.height);
+    //[image drawInRect:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)];
+
+    CGRect rect = CGRectMake(self.textf.center.x,self.textf.center.y, self.view.frame.size.width, self.view.frame.size.height);
     [[UIColor whiteColor] set];
     
     NSMutableAttributedString* attString = [[NSMutableAttributedString alloc] initWithString:text];
@@ -181,8 +205,8 @@
     shadow.shadowColor = [UIColor darkGrayColor];
     shadow.shadowOffset = CGSizeMake(1.0f, 1.5f);
     [attString addAttribute:NSShadowAttributeName value:shadow range:range];
-    
-    [attString drawInRect:CGRectIntegral(rect)];
+    [attString drawAtPoint:self.textf.center];
+   // [attString drawInRect:CGRectIntegral(rect)];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
