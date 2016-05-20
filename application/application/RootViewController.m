@@ -16,6 +16,8 @@
     NSMutableArray *_selectedAssets;
     BOOL _isSelectOriginalPhoto;
     
+    NSString *_edittingkey;
+    
 }
 
 @property (nonatomic , strong) NSMutableArray *assets;
@@ -236,6 +238,122 @@
 
 
 }
+
+
+-(UIImage*)drawFront:(UIImage*)image text:(NSString*)text atPoint:(CGPoint)point
+{
+    UIFont *font = [UIFont fontWithName:@"Palatino" size:40];
+    NSLog(@"%@",[UIFont familyNames]);
+    //UIFont *font = [UIFont systemFontOfSize:20];    //    "Hiragino Mincho ProN",
+    //    "Devanagari Sangam MN",
+    //    "Oriya Sangam MN",
+    //    "Snell Roundhand",
+    //    "Zapf Dingbats",
+    //    "Bodoni 72",
+    //    Verdana,
+    //    "American Typewriter",
+    //    "Avenir Next",
+    //    Baskerville,
+    //    "Khmer Sangam MN",
+    //    Didot,
+    //    "Savoye LET",
+    //    "Bodoni Ornaments",
+    //    Symbol,
+    //    Menlo,
+    //    "Bodoni 72 Smallcaps",
+    //    Papyrus,
+    //    "Hiragino Sans",
+    //    "PingFang SC",
+    //    "Euphemia UCAS",
+    //    "Telugu Sangam MN",
+    //    "Bangla Sangam MN",
+    //    Zapfino,
+    //    "Bodoni 72 Oldstyle"
+    //    Copperplate,
+    //    "Heiti SC",
+    //    "Iowan Old Style",
+    //    "Kohinoor Telugu",
+    //    Thonburi,
+    //    "Heiti TC",
+    //    "Courier New",
+    //    "Gill Sans",
+    //    "Apple SD Gothic Neo",
+    //    "Marker Felt",
+    //    "Avenir Next Condensed",
+    //    "Tamil Sangam MN",
+    //    "Helvetica Neue",
+    //    "Gurmukhi MN",
+    //    "Times New Roman",
+    //    Georgia,
+    //    "Apple Color Emoji",
+    //    "Arial Rounded MT Bold",
+    //    Kailasa,
+    //    "Kohinoor Devanagari",
+    //    "Kohinoor Bangla",
+    //    "Chalkboard SE",
+    //    "Sinhala Sangam MN",
+    //    "PingFang TC",
+    //    "Gujarati Sangam MN",
+    //    Damascus,
+    //    Noteworthy,
+    //    "Geeza Pro",
+    //    Avenir,
+    //    "Academy Engraved LET",
+    //    Mishafi,
+    //    Futura,
+    //    Farah,
+    //    "Kannada Sangam MN",
+    //    "Arial Hebrew",
+    //    Arial,
+    //    "Party LET",
+    //    Chalkduster,
+    //    "Hoefler Text",
+    //    Optima,
+    //    Palatino,
+    //    "Lao Sangam MN",
+    //    "Malayalam Sangam MN",
+    //    "Al Nile",
+    //    "Bradley Hand",
+    //    "PingFang HK",
+    //    "Trebuchet MS",
+    //    Helvetica,
+    //    Courier,
+    //    Cochin,
+
+    
+    UIGraphicsBeginImageContext(image.size);
+    [image drawInRect:CGRectMake(0,0,image.size.width,image.size.height)];
+     CGRect rect = CGRectMake(point.x,point.y, image.size.width, image.size.height);
+   // [image drawInRect:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)];
+    
+   // CGRect rect = CGRectMake(self.textf.center.x,self.textf.center.y, self.view.frame.size.width, self.view.frame.size.height);
+    [[UIColor whiteColor] set];
+    
+    NSMutableAttributedString* attString = [[NSMutableAttributedString alloc] initWithString:text];
+    NSRange range = NSMakeRange(0, [attString length]);
+    
+    [attString addAttribute:NSFontAttributeName value:font range:range];
+    [attString addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:range];
+    
+    NSShadow* shadow = [[NSShadow alloc] init];
+    shadow.shadowColor = [UIColor darkGrayColor];
+    shadow.shadowOffset = CGSizeMake(1.0f, 1.5f);
+    [attString addAttribute:NSShadowAttributeName value:shadow range:range];
+    //[attString drawAtPoint:self.textf.center];
+     [attString drawInRect:CGRectIntegral(rect)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+//    NSUserDefaults *def=[NSUserDefaults standardUserDefaults];
+//    if ([def integerForKey:@""]) {
+//        <#statements#>
+//    }
+//    
+    
+    
+    return newImage;
+}
+
+
 
 - (IBAction)addLiterature:(id)sender {
 }
