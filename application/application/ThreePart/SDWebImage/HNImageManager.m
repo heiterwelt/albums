@@ -19,6 +19,15 @@
 }
 
 
+-(NSMutableArray *)keyArray
+{
+    if (!_keyArray) {
+        _keyArray=[NSMutableArray array];
+        
+    }
+    return _keyArray;
+}
+
 -(NSMutableArray *)imageArray{
     if (!_imageArray) {
         _imageArray=[NSMutableArray array];
@@ -37,6 +46,7 @@
                         
                         [[SDImageCache sharedImageCache] storeImage:image forKey:key];
                         [self.imageArray addObject:image];
+                        [self.keyArray addObject:key];
                     }
                     
                 }
@@ -50,6 +60,7 @@
                     UIImage *image=[[SDImageCache sharedImageCache] imageFromDiskCacheForKey:keyget];
                     if (image) {
                         [self.imageArray addObject:image];
+                        [self.keyArray addObject:keyget];
                     }
                     
                     

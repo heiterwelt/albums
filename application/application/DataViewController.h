@@ -8,17 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "application-Swift.h"
+#import "HNImageManager.h"
+#import "SDImageCache.h"
 @interface DataViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UILabel *dataLabel;
+
 //@property (strong, nonatomic) id dataObject;
 @property(nonatomic,strong) UIImage *image;
-@property(nonatomic,strong)UIImageView *imageview;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imageview;
+@property(nonatomic,strong) NSString *edittingkey;
 
 @property(nonatomic,strong)FadingLabel *quoteLabel;
 @property(nonatomic,strong)UISwipeGestureRecognizer *downgesture;
 @property(nonatomic,strong)UITapGestureRecognizer *tapgesture;
 
+@property(nonatomic,strong)UITextField *edittextf;
 
 @property (weak, nonatomic) IBOutlet UIView *contentview;
 

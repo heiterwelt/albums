@@ -63,6 +63,8 @@
     DataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"DataViewController"];
    // dataViewController.dataObject = [HNImageManager shareInterface].imageArray[index];
     dataViewController.image=[HNImageManager shareInterface].imageArray[index];
+    
+    NSLog(@"imagename:\n%@imagearray index:\n%lu",dataViewController.image.description,(unsigned long)index);
     return dataViewController;
 }
 
@@ -74,7 +76,7 @@
 }
 
 #pragma mark - Page View Controller Data Source
-
+//
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
     if (viewController.navigationController.navigationBar.isHidden==NO) {

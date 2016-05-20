@@ -16,7 +16,7 @@
     NSMutableArray *_selectedAssets;
     BOOL _isSelectOriginalPhoto;
     
-    NSString *_edittingkey;
+   
     
 }
 
@@ -273,7 +273,7 @@
     UIGraphicsEndImageContext();
 
 //    
-    [[SDImageCache sharedImageCache] storeImage:newImage forKey:_edittingkey];
+  //  [[SDImageCache sharedImageCache] storeImage:newImage forKey:_edittingkey];
     
     return newImage;
 }
@@ -281,5 +281,6 @@
 
 
 - (IBAction)addLiterature:(id)sender {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOWTEXTFIELD" object:nil];
 }
 @end

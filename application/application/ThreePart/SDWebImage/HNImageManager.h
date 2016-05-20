@@ -12,5 +12,6 @@
 
 @property(nonatomic,strong)NSMutableArray *imageArray;
 
+@property(nonatomic,strong)NSMutableArray *keyArray;
 +(HNImageManager *)shareInterface;
 @end
