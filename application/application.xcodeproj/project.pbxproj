@@ -18,6 +18,7 @@
 		C007746C1CE3343C002A2754 /* applicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C007746B1CE3343C002A2754 /* applicationTests.m */; };
 		C00774771CE3343C002A2754 /* applicationUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C00774761CE3343C002A2754 /* applicationUITests.m */; };
 		C00774861CE337DE002A2754 /* HNModleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C00774851CE337DE002A2754 /* HNModleViewController.m */; };
+		C01254091CEEE98A004CE0C9 /* HNImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C01254081CEEE98A004CE0C9 /* HNImageManager.m */; };
 		C01FA89B1CE45B9B007D4D26 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C01FA8321CE45B9A007D4D26 /* DACircularProgressView.m */; };
 		C01FA89C1CE45B9B007D4D26 /* DALabeledCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C01FA8341CE45B9A007D4D26 /* DALabeledCircularProgressView.m */; };
 		C01FA89D1CE45B9B007D4D26 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = C01FA8371CE45B9A007D4D26 /* NSData+ImageContentType.m */; };
@@ -91,6 +92,8 @@
 		C00774781CE3343C002A2754 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C00774841CE337DE002A2754 /* HNModleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HNModleViewController.h; sourceTree = "<group>"; };
 		C00774851CE337DE002A2754 /* HNModleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HNModleViewController.m; sourceTree = "<group>"; };
+		C01254071CEEE98A004CE0C9 /* HNImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HNImageManager.h; path = ThreePart/SDWebImage/HNImageManager.h; sourceTree = "<group>"; };
+		C01254081CEEE98A004CE0C9 /* HNImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HNImageManager.m; path = ThreePart/SDWebImage/HNImageManager.m; sourceTree = "<group>"; };
 		C01FA8311CE45B9A007D4D26 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
 		C01FA8321CE45B9A007D4D26 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
 		C01FA8331CE45B9A007D4D26 /* DALabeledCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DALabeledCircularProgressView.h; sourceTree = "<group>"; };
@@ -202,6 +205,8 @@
 				C01FA82F1CE45B9A007D4D26 /* ThreePart */,
 				C007744E1CE3343C002A2754 /* AppDelegate.h */,
 				C007744F1CE3343C002A2754 /* AppDelegate.m */,
+				C01254071CEEE98A004CE0C9 /* HNImageManager.h */,
+				C01254081CEEE98A004CE0C9 /* HNImageManager.m */,
 				C00774511CE3343C002A2754 /* RootViewController.h */,
 				C00774521CE3343C002A2754 /* RootViewController.m */,
 				C00774541CE3343C002A2754 /* DataViewController.h */,
@@ -496,6 +501,7 @@
 				C0BF36371CEAFCC1000BF3E4 /* TZAssetCell.m in Sources */,
 				C0BF363F1CEAFCC1000BF3E4 /* TZVideoPlayerController.m in Sources */,
 				C01FA8A31CE45B9B007D4D26 /* SDWebImageManager.m in Sources */,
+				C01254091CEEE98A004CE0C9 /* HNImageManager.m in Sources */,
 				C00774531CE3343C002A2754 /* RootViewController.m in Sources */,
 				C0BF36401CEAFCC1000BF3E4 /* UIView+Layout.m in Sources */,
 				C01FA8A81CE45B9B007D4D26 /* UIImageView+HighlightedWebCache.m in Sources */,

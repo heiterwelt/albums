@@ -31,34 +31,46 @@
     self = [super init];
     if (self) {
         // Create the data model.
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        //NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         
-        _pageData = [[dateFormatter monthSymbols] copy];
-        self.imagarr=[NSArray arrayWithObjects:@"one",@"two",@"three",@"four",@"five",@"six",@"seven",@"eight",@"nine",@"ten",@"one",@"two", nil ];
+        //_pageData = [[dateFormatter monthSymbols] copy];
+       
+     //   [self addObserver:self forKeyPath:@"self.imagarr.count" options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld) context:nil];
+
     }
     return self;
 }
+
+
+
+//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
+//    if ([keyPath isEqual:@"self.imagarr.count"]) {
+//        NSLog(@"%@",change);
+//    }
+//}
+
 -(BOOL)prefersStatusBarHidden{
     return YES;
 }
 
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard {
     // Return the data view controller for the given index.
-    if (([self.pageData count] == 0) || (index >= [self.pageData count])) {
+    if (([[HNImageManager shareInterface].imageArray count] == 0) || (index >= [[HNImageManager shareInterface].imageArray count])) {
         return nil;
     }
 
     // Create a new view controller and pass suitable data.
     DataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"DataViewController"];
-    dataViewController.dataObject = self.pageData[index];
-    dataViewController.image=[UIImage imageNamed:self.imagarr[index]];
+   // dataViewController.dataObject = [HNImageManager shareInterface].imageArray[index];
+    dataViewController.image=[HNImageManager shareInterface].imageArray[index];
     return dataViewController;
 }
 
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController {
     // Return the index of the given data view controller.
     // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
-    return [self.pageData indexOfObject:viewController.dataObject];
+    
+    return [[HNImageManager shareInterface].imageArray indexOfObject:viewController.image];
 }
 
 #pragma mark - Page View Controller Data Source
@@ -70,7 +82,7 @@
         
     }
     NSUInteger index = [self indexOfViewController:(DataViewController *)viewController];
-    if ((index == 0) || (index == NSNotFound)) {
+      if ((index == 0) || (index == NSNotFound)) {
         return nil;
     }
     
@@ -90,7 +102,7 @@
     }
     
     index++;
-    if (index == [self.pageData count]) {
+    if (index == [[HNImageManager shareInterface].imageArray count]) {
         return nil;
     }
     return [self viewControllerAtIndex:index storyboard:viewController.storyboard];

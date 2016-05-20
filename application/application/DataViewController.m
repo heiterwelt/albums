@@ -15,6 +15,7 @@
 
 @implementation DataViewController
 @synthesize quoteLabel=_quoteLabel;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor yellowColor];
@@ -98,7 +99,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.dataLabel.text = [self.dataObject description];
+    //self.dataLabel.text = [self.dataObject description];
     [self.imageview setImage:self.image];
 }
 

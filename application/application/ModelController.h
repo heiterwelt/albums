@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HNImageManager.h"
 @class DataViewController;
 
 @interface ModelController : NSObject <UIPageViewControllerDataSource>

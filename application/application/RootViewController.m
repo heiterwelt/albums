@@ -49,6 +49,8 @@
     _selectedAssets = [NSMutableArray array];
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.delegate = self;
+    
+    
 
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
     NSArray *viewControllers = @[startingViewController];
@@ -181,6 +183,7 @@
                     UIImage *image=photos[i-1-NUMBER];
                     
                     [[SDImageCache sharedImageCache] storeImage:image forKey:key];
+                    [[HNImageManager shareInterface].imageArray addObject:image];
                 }
                 
             }
@@ -212,12 +215,12 @@
         NSLog(@"get:%ld",[[SDImageCache sharedImageCache] getDiskCount]);
 
         
-        //删除
-        NSInteger deletenum=3;
-        [arr removeObjectAtIndex:deletenum];
-        NSString *deletekey=[NSString stringWithFormat:@"image_%ld",deletenum+1];
-        [[SDImageCache sharedImageCache] removeImageForKey:deletekey];
-        NSLog(@"delete:%ld",[[SDImageCache sharedImageCache] getDiskCount]);
+//        //删除
+//        NSInteger deletenum=3;
+//        [arr removeObjectAtIndex:deletenum];
+//        NSString *deletekey=[NSString stringWithFormat:@"image_%ld",deletenum+1];
+//        [[SDImageCache sharedImageCache] removeImageForKey:deletekey];
+//        NSLog(@"delete:%ld",[[SDImageCache sharedImageCache] getDiskCount]);
 
         
     }];
@@ -244,82 +247,7 @@
 {
     UIFont *font = [UIFont fontWithName:@"Palatino" size:40];
     NSLog(@"%@",[UIFont familyNames]);
-    //UIFont *font = [UIFont systemFontOfSize:20];    //    "Hiragino Mincho ProN",
-    //    "Devanagari Sangam MN",
-    //    "Oriya Sangam MN",
-    //    "Snell Roundhand",
-    //    "Zapf Dingbats",
-    //    "Bodoni 72",
-    //    Verdana,
-    //    "American Typewriter",
-    //    "Avenir Next",
-    //    Baskerville,
-    //    "Khmer Sangam MN",
-    //    Didot,
-    //    "Savoye LET",
-    //    "Bodoni Ornaments",
-    //    Symbol,
-    //    Menlo,
-    //    "Bodoni 72 Smallcaps",
-    //    Papyrus,
-    //    "Hiragino Sans",
-    //    "PingFang SC",
-    //    "Euphemia UCAS",
-    //    "Telugu Sangam MN",
-    //    "Bangla Sangam MN",
-    //    Zapfino,
-    //    "Bodoni 72 Oldstyle"
-    //    Copperplate,
-    //    "Heiti SC",
-    //    "Iowan Old Style",
-    //    "Kohinoor Telugu",
-    //    Thonburi,
-    //    "Heiti TC",
-    //    "Courier New",
-    //    "Gill Sans",
-    //    "Apple SD Gothic Neo",
-    //    "Marker Felt",
-    //    "Avenir Next Condensed",
-    //    "Tamil Sangam MN",
-    //    "Helvetica Neue",
-    //    "Gurmukhi MN",
-    //    "Times New Roman",
-    //    Georgia,
-    //    "Apple Color Emoji",
-    //    "Arial Rounded MT Bold",
-    //    Kailasa,
-    //    "Kohinoor Devanagari",
-    //    "Kohinoor Bangla",
-    //    "Chalkboard SE",
-    //    "Sinhala Sangam MN",
-    //    "PingFang TC",
-    //    "Gujarati Sangam MN",
-    //    Damascus,
-    //    Noteworthy,
-    //    "Geeza Pro",
-    //    Avenir,
-    //    "Academy Engraved LET",
-    //    Mishafi,
-    //    Futura,
-    //    Farah,
-    //    "Kannada Sangam MN",
-    //    "Arial Hebrew",
-    //    Arial,
-    //    "Party LET",
-    //    Chalkduster,
-    //    "Hoefler Text",
-    //    Optima,
-    //    Palatino,
-    //    "Lao Sangam MN",
-    //    "Malayalam Sangam MN",
-    //    "Al Nile",
-    //    "Bradley Hand",
-    //    "PingFang HK",
-    //    "Trebuchet MS",
-    //    Helvetica,
-    //    Courier,
-    //    Cochin,
-
+   
     
     UIGraphicsBeginImageContext(image.size);
     [image drawInRect:CGRectMake(0,0,image.size.width,image.size.height)];
@@ -343,12 +271,9 @@
      [attString drawInRect:CGRectIntegral(rect)];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-//    NSUserDefaults *def=[NSUserDefaults standardUserDefaults];
-//    if ([def integerForKey:@""]) {
-//        <#statements#>
-//    }
+
 //    
-    
+    [[SDImageCache sharedImageCache] storeImage:newImage forKey:_edittingkey];
     
     return newImage;
 }
